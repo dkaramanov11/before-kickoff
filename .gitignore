@@ -1,0 +1,32 @@
+# IntelliJ IDEA
+.idea/
+*.iml
+
+# Java / Maven
+**/target/
+
+# React / Vite
+**/node_modules/
+**/dist/
+
+# Python
+**/__pycache__/
+*.py[cod]
+**/.venv/
+**/venv/
+**/.pytest_cache/
+
+# Local environment variables and secrets
+.env
+.env.*
+!.env.example
+application-local.properties
+application-local.yml
+application-local.yaml
+
+# Logs
+*.log
+
+# Operating system files
+.DS_Store
+Thumbs.db
