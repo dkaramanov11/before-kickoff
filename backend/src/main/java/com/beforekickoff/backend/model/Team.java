@@ -39,4 +39,10 @@ public class Team {
         this.shortName = shortName;
         this.crestUrl = crestUrl;
     }
+
+    public void updateDetails(String name, String shortName, String crestUrl) {
+        this.name = name;
+        this.shortName = shortName;
+        this.crestUrl = crestUrl;
+    }
 }
