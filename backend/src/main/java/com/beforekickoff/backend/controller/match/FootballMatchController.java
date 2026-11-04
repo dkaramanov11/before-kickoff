@@ -3,10 +3,13 @@ package com.beforekickoff.backend.controller.match;
 import com.beforekickoff.backend.dto.match.FootballMatchResponse;
 import com.beforekickoff.backend.service.FootballMatchService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @RestController
@@ -17,7 +20,26 @@ public class FootballMatchController {
     private final FootballMatchService footballMatchService;
 
     @GetMapping
-    public List<FootballMatchResponse> getAllMatches() {
-        return footballMatchService.getAllMatches();
+    public List<FootballMatchResponse> getMatches(
+            @RequestParam(name = "teamId", required = false)
+            Long teamId,
+
+            @RequestParam(name = "status", required = false)
+            String status,
+
+            @RequestParam(name = "dateFrom", required = false)
+            @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+            LocalDate dateFrom,
+
+            @RequestParam(name = "dateTo", required = false)
+            @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+            LocalDate dateTo
+    ) {
+        return footballMatchService.getMatches(
+                teamId,
+                status,
+                dateFrom,
+                dateTo
+        );
     }
 }
