@@ -1,6 +1,6 @@
-package com.beforekickoff.backend.controller;
+package com.beforekickoff.backend.controller.team;
 
-import com.beforekickoff.backend.dto.TeamImportResponse;
+import com.beforekickoff.backend.dto.team.TeamImportResponse;
 import com.beforekickoff.backend.service.TeamImportService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;

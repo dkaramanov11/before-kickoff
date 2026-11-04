@@ -1,7 +1,7 @@
 package com.beforekickoff.backend.service.impl;
 
 import com.beforekickoff.backend.integration.footballdata.FootballDataClient;
-import com.beforekickoff.backend.integration.footballdata.dto.FootballDataTeam;
+import com.beforekickoff.backend.integration.footballdata.dto.team.FootballDataTeam;
 import com.beforekickoff.backend.model.Team;
 import com.beforekickoff.backend.repository.TeamRepository;
 import com.beforekickoff.backend.service.TeamImportService;
