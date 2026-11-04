@@ -1,6 +1,6 @@
 package com.beforekickoff.backend.service.impl;
 
-import com.beforekickoff.backend.dto.FootballMatchResponse;
+import com.beforekickoff.backend.dto.match.FootballMatchResponse;
 import com.beforekickoff.backend.repository.FootballMatchRepository;
 import com.beforekickoff.backend.service.FootballMatchService;
 import lombok.RequiredArgsConstructor;

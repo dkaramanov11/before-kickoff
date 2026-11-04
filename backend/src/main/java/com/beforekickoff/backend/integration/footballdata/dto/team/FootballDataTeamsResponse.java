@@ -1,4 +1,4 @@
-package com.beforekickoff.backend.integration.footballdata.dto;
+package com.beforekickoff.backend.integration.footballdata.dto.team;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 

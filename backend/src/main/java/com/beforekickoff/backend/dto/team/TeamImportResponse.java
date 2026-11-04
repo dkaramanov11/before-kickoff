@@ -1,4 +1,4 @@
-package com.beforekickoff.backend.dto;
+package com.beforekickoff.backend.dto.team;
 
 public record TeamImportResponse(
         int processedTeams

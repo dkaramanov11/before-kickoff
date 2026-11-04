@@ -1,5 +1,6 @@
-package com.beforekickoff.backend.dto;
+package com.beforekickoff.backend.dto.match;
 
+import com.beforekickoff.backend.dto.team.TeamResponse;
 import com.beforekickoff.backend.model.FootballMatch;
 
 import java.time.Instant;

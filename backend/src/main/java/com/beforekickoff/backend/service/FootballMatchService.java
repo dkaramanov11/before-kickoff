@@ -1,6 +1,6 @@
 package com.beforekickoff.backend.service;
 
-import com.beforekickoff.backend.dto.FootballMatchResponse;
+import com.beforekickoff.backend.dto.match.FootballMatchResponse;
 
 import java.util.List;
 

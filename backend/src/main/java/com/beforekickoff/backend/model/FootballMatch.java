@@ -62,4 +62,22 @@ public class FootballMatch {
         this.homeScore = homeScore;
         this.awayScore = awayScore;
     }
+
+    public void updateDetails(
+            Team homeTeam,
+            Team awayTeam,
+            Instant kickoffAt,
+            String status,
+            Integer matchday,
+            Integer homeScore,
+            Integer awayScore
+    ) {
+        this.homeTeam = homeTeam;
+        this.awayTeam = awayTeam;
+        this.kickoffAt = kickoffAt;
+        this.status = status;
+        this.matchday = matchday;
+        this.homeScore = homeScore;
+        this.awayScore = awayScore;
+    }
 }

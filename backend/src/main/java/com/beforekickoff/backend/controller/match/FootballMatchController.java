@@ -1,6 +1,6 @@
-package com.beforekickoff.backend.controller;
+package com.beforekickoff.backend.controller.match;
 
-import com.beforekickoff.backend.dto.FootballMatchResponse;
+import com.beforekickoff.backend.dto.match.FootballMatchResponse;
 import com.beforekickoff.backend.service.FootballMatchService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;

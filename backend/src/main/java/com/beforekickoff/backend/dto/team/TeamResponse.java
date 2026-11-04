@@ -1,4 +1,4 @@
-package com.beforekickoff.backend.dto;
+package com.beforekickoff.backend.dto.team;
 
 import com.beforekickoff.backend.model.Team;
 
