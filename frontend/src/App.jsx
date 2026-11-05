@@ -1,4 +1,5 @@
 import Sidebar from './components/layout/Sidebar'
+import PageHeader from './components/layout/PageHeader'
 import './styles/App.css'
 
 function App() {
@@ -7,11 +8,7 @@ function App() {
             <Sidebar />
 
             <main className="app">
-                <header className="app__header">
-                    <p className="app__competition">Premier League</p>
-                    <h1>Every match. A clearer picture.</h1>
-                    <p>Football statistics, predictions and match analysis.</p>
-                </header>
+                <PageHeader />
 
                 <section
                     id="matches"

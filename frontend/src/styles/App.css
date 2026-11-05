@@ -12,30 +12,6 @@
     padding: 40px 32px;
 }
 
-.app__header {
-    margin-bottom: 32px;
-}
-
-.app__competition {
-    margin: 0;
-    color: var(--color-accent);
-    font-size: 14px;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-}
-
-.app__header h1 {
-    margin: 8px 0;
-    font-size: clamp(32px, 4vw, 48px);
-    line-height: 1.15;
-}
-
-.app__header > p:last-child {
-    margin: 16px 0 0;
-    color: var(--color-text-muted);
-}
-
 .app__section {
     padding: 24px;
     border: 1px solid var(--color-border);
