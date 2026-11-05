@@ -1,0 +1,86 @@
+.match-filters {
+    margin-bottom: 24px;
+    padding-bottom: 24px;
+    border-bottom: 1px solid var(--color-border);
+}
+
+.match-filters__fields {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+}
+
+.match-filters__field {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    min-width: 0;
+}
+
+.match-filters__field span {
+    color: var(--color-text-muted);
+    font-size: 13px;
+}
+
+.match-filters__field select,
+.match-filters__field input {
+    width: 100%;
+    min-width: 0;
+    min-height: 44px;
+    padding: 10px 12px;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-small);
+    color: var(--color-text);
+    background-color: var(--color-background);
+}
+
+.match-filters__field select:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.match-filters__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 20px;
+}
+
+.match-filters__actions button {
+    min-height: 44px;
+    padding: 10px 16px;
+    border-radius: var(--radius-small);
+    font-weight: 700;
+}
+
+.match-filters__apply {
+    border: 1px solid var(--color-accent);
+    color: var(--color-background);
+    background-color: var(--color-accent);
+}
+
+.match-filters__apply:hover {
+    background-color: var(--color-accent-hover);
+}
+
+.match-filters__clear {
+    border: 1px solid var(--color-border);
+    color: var(--color-accent);
+    background-color: transparent;
+}
+
+.match-filters__clear:hover {
+    background-color: var(--color-accent-soft);
+}
+
+.match-filters__message {
+    margin: 16px 0 0;
+    color: var(--color-text);
+    font-size: 13px;
+}
+
+@media (max-width: 600px) {
+    .match-filters__fields {
+        grid-template-columns: 1fr;
+    }
+}

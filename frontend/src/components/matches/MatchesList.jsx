@@ -1,9 +1,12 @@
 import { useMatches } from '../../hooks/useMatches'
 import { formatMatchDateTime } from '../../utils/dateTime'
+import { useState } from 'react'
+import MatchFilters from './MatchFilters'
 import '../../styles/matches/MatchesList.css'
 
 function MatchesList() {
-    const { matches, isLoading, error } = useMatches()
+    const [appliedFilters, setAppliedFilters] = useState({})
+    const { matches, isLoading, error } = useMatches(appliedFilters)
 
     return (
         <section
@@ -13,6 +16,7 @@ function MatchesList() {
             aria-busy={isLoading}
         >
             <h2 id="matches-heading">Matches</h2>
+            <MatchFilters onApply={setAppliedFilters} />
 
             {isLoading ? (
                 <p className="matches__message" role="status">

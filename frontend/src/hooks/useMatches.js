@@ -1,7 +1,12 @@
 import { useEffect, useState } from 'react'
 import { getMatches } from '../api/matchesApi'
 
-export function useMatches() {
+export function useMatches({
+                               teamId = '',
+                               status = '',
+                               dateFrom = '',
+                               dateTo = '',
+                           } = {}) {
     const [matches, setMatches] = useState([])
     const [isLoading, setIsLoading] = useState(true)
     const [error, setError] = useState(null)
@@ -10,8 +15,15 @@ export function useMatches() {
         const controller = new AbortController()
 
         async function loadMatches() {
+            setIsLoading(true)
+            setError(null)
+
             try {
                 const data = await getMatches({
+                    teamId,
+                    status,
+                    dateFrom,
+                    dateTo,
                     signal: controller.signal,
                 })
 
@@ -32,7 +44,7 @@ export function useMatches() {
         loadMatches()
 
         return () => controller.abort()
-    }, [])
+    }, [teamId, status, dateFrom, dateTo])
 
     return { matches, isLoading, error }
 }
