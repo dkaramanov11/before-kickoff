@@ -1,0 +1,114 @@
+.sidebar {
+    position: sticky;
+    top: 0;
+    display: flex;
+    flex-direction: column;
+    height: 100dvh;
+    padding: 40px 16px 24px;
+    border-right: 1px solid var(--color-border);
+    background-color: var(--color-sidebar);
+}
+
+.sidebar__brand {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 0 8px;
+    margin-bottom: 64px;
+}
+
+.sidebar__monogram {
+    color: var(--color-accent);
+    font-size: 48px;
+    font-weight: 900;
+    font-style: italic;
+    line-height: 1;
+    letter-spacing: -5px;
+}
+
+.sidebar__name {
+    padding-left: 16px;
+    border-left: 1px solid var(--color-border);
+    font-size: 23px;
+    font-weight: 700;
+    line-height: 1.1;
+}
+
+.sidebar__navigation {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.sidebar__link {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    min-height: 52px;
+    padding: 12px 16px;
+    border-left: 4px solid transparent;
+    border-radius: var(--radius-small);
+    font-size: 15px;
+    text-decoration: none;
+}
+
+.sidebar__link--active {
+    border-left-color: var(--color-accent);
+    color: var(--color-text);
+    background-color: var(--color-accent-soft);
+    font-weight: 700;
+}
+
+.sidebar__link--active:hover {
+    background-color: var(--color-surface-hover);
+}
+
+.sidebar__link--disabled {
+    color: var(--color-text-muted);
+}
+
+.sidebar__soon {
+    font-size: 10px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+}
+
+.sidebar__footer {
+    margin-top: auto;
+    padding: 20px 8px 0;
+    border-top: 1px solid var(--color-border);
+}
+
+.sidebar__footer p {
+    margin: 0 0 4px;
+    font-weight: 700;
+}
+
+.sidebar__footer span {
+    color: var(--color-text-muted);
+    font-size: 13px;
+}
+
+@media (max-width: 900px) {
+    .sidebar {
+        position: static;
+        height: auto;
+        padding: 20px 16px;
+        border-right: none;
+        border-bottom: 1px solid var(--color-border);
+    }
+
+    .sidebar__brand {
+        margin-bottom: 24px;
+    }
+
+    .sidebar__navigation {
+        flex-direction: row;
+        flex-wrap: wrap;
+    }
+
+    .sidebar__footer {
+        display: none;
+    }
+}
