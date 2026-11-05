@@ -1,5 +1,6 @@
 import Sidebar from './components/layout/Sidebar'
 import PageHeader from './components/layout/PageHeader'
+import MatchesList from './components/matches/MatchesList'
 import './styles/App.css'
 
 function App() {
@@ -9,15 +10,7 @@ function App() {
 
             <main className="app">
                 <PageHeader />
-
-                <section
-                    id="matches"
-                    className="app__section"
-                    aria-labelledby="matches-heading"
-                >
-                    <h2 id="matches-heading">Matches</h2>
-                    <p>The match list will appear here.</p>
-                </section>
+                <MatchesList />
             </main>
         </div>
     )
