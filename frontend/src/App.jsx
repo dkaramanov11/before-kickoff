@@ -1,6 +1,7 @@
 import Sidebar from './components/layout/Sidebar'
 import PageHeader from './components/layout/PageHeader'
 import MatchesList from './components/matches/MatchesList'
+import TeamsList from './components/teams/TeamsList'
 import './styles/App.css'
 
 function App() {
@@ -10,7 +11,10 @@ function App() {
 
             <main className="app">
                 <PageHeader />
-                <MatchesList />
+                <div className="app__content">
+                    <MatchesList />
+                    <TeamsList />
+                </div>
             </main>
         </div>
     )
