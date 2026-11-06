@@ -26,4 +26,8 @@ public interface FootballMatchRepository
             Specification<FootballMatch> specification,
             Sort sort
     );
+
+    @Override
+    @EntityGraph(attributePaths = {"homeTeam", "awayTeam"})
+    Optional<FootballMatch> findById(Long id);
 }
