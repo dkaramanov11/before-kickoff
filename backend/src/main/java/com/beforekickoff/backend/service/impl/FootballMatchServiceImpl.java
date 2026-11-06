@@ -90,4 +90,22 @@ public class FootballMatchServiceImpl implements FootballMatchService {
                 .map(FootballMatchResponse::from)
                 .toList();
     }
+
+    @Override
+    public FootballMatchResponse getMatchById(Long id) {
+        if (id == null || id <= 0) {
+            throw new ResponseStatusException(
+                    HttpStatus.BAD_REQUEST,
+                    "id must be a positive number"
+            );
+        }
+
+        FootballMatch match = footballMatchRepository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(
+                        HttpStatus.NOT_FOUND,
+                        "Match with id " + id + " was not found"
+                ));
+
+        return FootballMatchResponse.from(match);
+    }
 }

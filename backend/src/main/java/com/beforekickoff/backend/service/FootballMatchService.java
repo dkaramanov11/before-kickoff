@@ -16,4 +16,6 @@ public interface FootballMatchService {
             LocalDate dateTo
     );
 
+    FootballMatchResponse getMatchById(Long id);
+
 }
