@@ -1,22 +1,32 @@
+import { BrowserRouter, Link, Route, Routes } from 'react-router-dom'
 import Sidebar from './components/layout/Sidebar'
-import PageHeader from './components/layout/PageHeader'
-import MatchesList from './components/matches/MatchesList'
-import TeamsList from './components/teams/TeamsList'
+import MatchesPage from './pages/MatchesPage'
 import './styles/App.css'
+import MatchDetailsPage from './pages/MatchDetailsPage'
 
 function App() {
     return (
-        <div className="app-layout">
-            <Sidebar />
+        <BrowserRouter>
+            <div className="app-layout">
+                <Sidebar />
 
-            <main className="app">
-                <PageHeader />
-                <div className="app__content">
-                    <MatchesList />
-                    <TeamsList />
-                </div>
-            </main>
-        </div>
+                <main className="app">
+                    <Routes>
+                        <Route path="/" element={<MatchesPage />} />
+                        <Route path="/matches/:id" element={<MatchDetailsPage />} />
+                        <Route
+                            path="*"
+                            element={
+                                <section>
+                                    <h1>Page not found</h1>
+                                    <Link to="/">Back to matches</Link>
+                                </section>
+                            }
+                        />
+                    </Routes>
+                </main>
+            </div>
+        </BrowserRouter>
     )
 }
 

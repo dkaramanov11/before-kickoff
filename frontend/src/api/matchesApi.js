@@ -30,3 +30,7 @@ export function getMatches({
 
     return getJson(path, { signal })
 }
+
+export function getMatchById(id, { signal } = {}) {
+    return getJson(`/api/matches/${encodeURIComponent(id)}`, { signal })
+}
