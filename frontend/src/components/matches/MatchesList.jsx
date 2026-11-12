@@ -2,12 +2,16 @@ import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useMatches } from '../../hooks/useMatches'
 import { formatMatchDateTime } from '../../utils/dateTime'
-import MatchFilters from './MatchFilters'
+import MatchWeekPicker from './MatchWeekPicker'
 import '../../styles/matches/MatchesList.css'
 
-function MatchesList() {
-    const [appliedFilters, setAppliedFilters] = useState({})
-    const { matches, isLoading, error } = useMatches(appliedFilters)
+function MatchesList({ initialDate }) {
+    const [selectedDate, setSelectedDate] = useState(initialDate)
+
+    const { matches, isLoading, error } = useMatches({
+        dateFrom: selectedDate,
+        dateTo: selectedDate,
+    })
 
     return (
         <section
@@ -18,7 +22,10 @@ function MatchesList() {
         >
             <h2 id="matches-heading">Matches</h2>
 
-            <MatchFilters onApply={setAppliedFilters} />
+            <MatchWeekPicker
+                selectedDate={selectedDate}
+                onDateChange={setSelectedDate}
+            />
 
             {isLoading ? (
                 <p className="matches__message" role="status">
@@ -29,7 +36,9 @@ function MatchesList() {
                     Unable to load matches. Please try again later.
                 </p>
             ) : matches.length === 0 ? (
-                <p className="matches__message">No matches found.</p>
+                <p className="matches__message">
+                    No matches scheduled for this date.
+                </p>
             ) : (
                 <ul className="matches__list">
                     {matches.map((match) => {
