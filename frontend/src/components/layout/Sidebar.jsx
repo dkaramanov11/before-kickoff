@@ -1,4 +1,5 @@
 import '../../styles/layout/Sidebar.css'
+import { Link } from 'react-router-dom'
 
 function Sidebar() {
     return (
@@ -16,13 +17,12 @@ function Sidebar() {
             </div>
 
             <nav className="sidebar__navigation" aria-label="Main navigation">
-                <a
+                <Link
                     className="sidebar__link sidebar__link--active"
-                    href="#matches"
-                    aria-current="page"
+                    to="/"
                 >
                     Matches
-                </a>
+                </Link>
 
                 <span className="sidebar__link sidebar__link--disabled">
           Predictions

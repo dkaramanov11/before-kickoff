@@ -1,6 +1,7 @@
+import { useState } from 'react'
+import { Link } from 'react-router-dom'
 import { useMatches } from '../../hooks/useMatches'
 import { formatMatchDateTime } from '../../utils/dateTime'
-import { useState } from 'react'
 import MatchFilters from './MatchFilters'
 import '../../styles/matches/MatchesList.css'
 
@@ -16,6 +17,7 @@ function MatchesList() {
             aria-busy={isLoading}
         >
             <h2 id="matches-heading">Matches</h2>
+
             <MatchFilters onApply={setAppliedFilters} />
 
             {isLoading ? (
@@ -36,35 +38,46 @@ function MatchesList() {
 
                         return (
                             <li key={match.id} className="matches__item">
-                                <div className="matches__meta">
-                                    <time dateTime={match.kickoffAt}>
-                                        {formatMatchDateTime(match.kickoffAt)}
-                                    </time>
+                                <Link
+                                    className="matches__link"
+                                    to={`/matches/${match.id}`}
+                                >
+                                    <div className="matches__meta">
+                                        <time dateTime={match.kickoffAt}>
+                                            {formatMatchDateTime(match.kickoffAt)}
+                                        </time>
 
-                                    <span>{match.status || 'Unknown status'}</span>
-                                </div>
+                                        <span>{match.status || 'Unknown status'}</span>
+                                    </div>
 
-                                <div className="matches__fixture">
-                  <span className="matches__home">
-                    {match.homeTeam.shortName || match.homeTeam.name}
-                  </span>
+                                    <div className="matches__fixture">
+                    <span className="matches__home">
+                      {match.homeTeam.shortName || match.homeTeam.name}
+                    </span>
 
-                                    <span className="matches__score">
-                    {hasScore
-                        ? `${match.homeScore} – ${match.awayScore}`
-                        : 'vs'}
-                  </span>
+                                        <span className="matches__score">
+                      {hasScore
+                          ? `${match.homeScore} – ${match.awayScore}`
+                          : 'vs'}
+                    </span>
 
-                                    <span className="matches__away">
-                    {match.awayTeam.shortName || match.awayTeam.name}
-                  </span>
-                                </div>
+                                        <span className="matches__away">
+                      {match.awayTeam.shortName || match.awayTeam.name}
+                    </span>
+                                    </div>
 
-                                {match.matchday != null && (
-                                    <p className="matches__matchday">
-                                        Matchday {match.matchday}
-                                    </p>
-                                )}
+                                    <div className="matches__footer">
+                    <span className="matches__matchday">
+                      {match.matchday != null
+                          ? `Matchday ${match.matchday}`
+                          : ''}
+                    </span>
+
+                                        <span className="matches__details">
+                      View details <span aria-hidden="true">→</span>
+                    </span>
+                                    </div>
+                                </Link>
                             </li>
                         )
                     })}
