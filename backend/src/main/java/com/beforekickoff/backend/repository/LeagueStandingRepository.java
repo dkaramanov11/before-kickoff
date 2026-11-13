@@ -1,0 +1,12 @@
+package com.beforekickoff.backend.repository;
+
+import com.beforekickoff.backend.model.LeagueStanding;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import java.util.Optional;
+
+public interface LeagueStandingRepository
+        extends JpaRepository<LeagueStanding, Long> {
+
+    Optional<LeagueStanding> findByCompetitionCode(String competitionCode);
+}
