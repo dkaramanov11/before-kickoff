@@ -1,6 +1,6 @@
 import PageHeader from '../components/layout/PageHeader'
 import MatchesList from '../components/matches/MatchesList'
-import TeamsList from '../components/teams/TeamsList'
+import StandingsTable from '../components/standings/StandingsTable'
 import { useInitialMatchDate } from '../hooks/useInitialMatchDate'
 import { getTodayDate } from '../utils/calendar'
 
@@ -31,7 +31,7 @@ function MatchesPage() {
                     </div>
                 )}
 
-                <TeamsList />
+                <StandingsTable />
             </div>
         </>
     )
