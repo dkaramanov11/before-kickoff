@@ -5,6 +5,7 @@ import com.beforekickoff.backend.integration.footballdata.dto.team.FootballDataT
 import com.beforekickoff.backend.integration.footballdata.dto.team.FootballDataTeamsResponse;
 import com.beforekickoff.backend.integration.footballdata.dto.match.FootballDataMatch;
 import com.beforekickoff.backend.integration.footballdata.dto.match.FootballDataMatchesResponse;
+import com.beforekickoff.backend.integration.footballdata.dto.standings.FootballDataStandingsResponse;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestClient;
 
@@ -50,5 +51,20 @@ public class FootballDataClient {
         }
 
         return response.matches();
+    }
+
+    public FootballDataStandingsResponse getPremierLeagueStandings() {
+        FootballDataStandingsResponse response = restClient.get()
+                .uri("/competitions/PL/standings")
+                .retrieve()
+                .body(FootballDataStandingsResponse.class);
+
+        if (response == null) {
+            throw new IllegalStateException(
+                    "Football Data API returned an empty standings response"
+            );
+        }
+
+        return response;
     }
 }
