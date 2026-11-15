@@ -1,0 +1,22 @@
+.match-status {
+    padding: 4px 8px;
+    border-radius: var(--radius-small);
+    font-size: 11px;
+    font-weight: 700;
+}
+
+.match-status--upcoming {
+    background-color: var(--color-accent-soft);
+    color: var(--color-accent);
+}
+
+.match-status--live {
+    background-color: var(--color-accent);
+    color: var(--color-background);
+}
+
+.match-status--finished,
+.match-status--neutral {
+    background-color: var(--color-surface-hover);
+    color: var(--color-text-muted);
+}

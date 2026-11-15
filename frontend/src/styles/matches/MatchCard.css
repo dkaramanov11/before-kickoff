@@ -1,0 +1,103 @@
+.match-card {
+    display: block;
+    padding: 20px;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-medium);
+    background-color: var(--color-background);
+    color: var(--color-text);
+    text-decoration: none;
+    transition:
+            background-color 0.2s,
+            border-color 0.2s;
+}
+
+.match-card:hover {
+    border-color: var(--color-accent);
+    background-color: var(--color-surface-hover);
+}
+
+.match-card:focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 3px;
+}
+
+.match-card__meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px 16px;
+    margin-bottom: 20px;
+    color: var(--color-text-muted);
+    font-size: 12px;
+}
+
+.match-card__status {
+    padding: 4px 8px;
+    border-radius: var(--radius-small);
+    font-size: 11px;
+    font-weight: 700;
+}
+
+.match-card__status--upcoming {
+    background-color: var(--color-accent-soft);
+    color: var(--color-accent);
+}
+
+.match-card__status--live {
+    background-color: var(--color-accent);
+    color: var(--color-background);
+}
+
+.match-card__status--finished,
+.match-card__status--neutral {
+    background-color: var(--color-surface-hover);
+    color: var(--color-text-muted);
+}
+
+.match-card__fixture {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+    align-items: center;
+    gap: 16px;
+}
+
+.match-card__result {
+    color: var(--color-accent);
+    font-size: 20px;
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+}
+
+.match-card__footer {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 8px 16px;
+    margin-top: 20px;
+    font-size: 12px;
+}
+
+.match-card__matchday {
+    color: var(--color-text-muted);
+}
+
+.match-card__details {
+    color: var(--color-accent);
+    font-weight: 700;
+}
+
+@media (max-width: 600px) {
+    .match-card {
+        padding: 16px;
+    }
+
+    .match-card__fixture {
+        gap: 8px;
+    }
+
+    .match-card__result {
+        font-size: 18px;
+    }
+}

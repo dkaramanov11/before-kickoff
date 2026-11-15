@@ -20,3 +20,17 @@ export function formatMatchDateTime(value) {
 
     return matchDateTimeFormatter.format(date)
 }
+
+export function formatKickoffTime(value) {
+    if (!value) return 'vs'
+
+    const date = new Date(value)
+
+    if (Number.isNaN(date.getTime())) return 'vs'
+
+    return new Intl.DateTimeFormat('en-GB', {
+        timeZone: 'Europe/Skopje',
+        hour: '2-digit',
+        minute: '2-digit',
+    }).format(date)
+}
