@@ -92,10 +92,6 @@
     min-width: 110px;
 }
 
-.standings__team > span:last-child {
-    overflow-wrap: anywhere;
-}
-
 .standings__crest {
     display: grid;
     place-items: center;
@@ -151,4 +147,38 @@
     .standings__table td {
         padding: 12px 4px;
     }
+}
+
+.standings__team-info {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+    min-width: 0;
+    overflow-wrap: anywhere;
+}
+
+.standings__team-role {
+    color: var(--color-accent);
+    font-size: 10px;
+    font-weight: 400;
+}
+
+.standings__row--highlighted {
+    background-color: var(--color-accent-soft);
+}
+
+.standings__row--highlighted > td:first-child {
+    box-shadow: inset 3px 0 0 var(--color-accent);
+}
+
+.standings__retry {
+    font: inherit;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.standings__retry:focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 3px;
 }

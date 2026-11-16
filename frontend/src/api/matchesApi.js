@@ -34,3 +34,10 @@ export function getMatches({
 export function getMatchById(id, { signal } = {}) {
     return getJson(`/api/matches/${encodeURIComponent(id)}`, { signal })
 }
+
+export function getMatchHistory(id, { signal } = {}) {
+    return getJson(
+        `/api/matches/${encodeURIComponent(id)}/history`,
+        { signal }
+    )
+}

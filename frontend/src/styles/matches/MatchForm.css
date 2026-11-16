@@ -1,0 +1,60 @@
+.match-form {
+    margin-top: 24px;
+    padding: 24px;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-medium);
+    background-color: var(--color-surface);
+}
+
+.match-form h2 {
+    margin: 0 0 20px;
+    font-size: 22px;
+}
+
+.match-form__teams {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 24px;
+}
+
+.match-form__teams h3 {
+    margin: 0 0 12px;
+    font-size: 16px;
+    overflow-wrap: anywhere;
+}
+
+.match-form__message {
+    margin: 0;
+    color: var(--color-text-muted);
+}
+
+.match-form__retry {
+    margin-top: 12px;
+    padding: 8px 14px;
+    border: 1px solid var(--color-accent);
+    border-radius: var(--radius-small);
+    background-color: transparent;
+    color: var(--color-accent);
+    font: inherit;
+    cursor: pointer;
+}
+
+.match-form__retry:hover {
+    background-color: var(--color-accent-soft);
+}
+
+.match-form__retry:focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 3px;
+}
+
+@media (max-width: 600px) {
+    .match-form {
+        padding: 16px;
+    }
+
+    .match-form__teams {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+}
