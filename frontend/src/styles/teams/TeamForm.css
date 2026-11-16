@@ -1,0 +1,45 @@
+.team-form__list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.team-form__badge {
+    display: grid;
+    place-items: center;
+    width: 32px;
+    height: 32px;
+    border-radius: var(--radius-small);
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.team-form__badge--w {
+    background-color: var(--color-accent);
+    color: var(--color-background);
+}
+
+.team-form__badge--d {
+    background-color: #aab5c4;
+    color: var(--color-background);
+}
+
+.team-form__badge--l {
+    background-color: #ff8a80;
+    color: var(--color-background);
+}
+
+.team-form__hint {
+    margin: 8px 0 0;
+    color: var(--color-text-muted);
+    font-size: 11px;
+}
+
+.team-form__empty {
+    margin: 0;
+    color: var(--color-text-muted);
+    font-size: 13px;
+}

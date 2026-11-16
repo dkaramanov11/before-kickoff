@@ -1,11 +1,34 @@
 import { Link, useParams } from 'react-router-dom'
 import { useMatchDetails } from '../hooks/useMatchDetails'
-import { formatMatchDateTime } from '../utils/dateTime'
+import MatchHistory from '../components/matches/MatchHistory'
+import MatchStatus from '../components/matches/MatchStatus'
+import StandingsTable from '../components/standings/StandingsTable'
+import TeamCrest from '../components/teams/TeamCrest'
+import {
+    formatMatchDateTime,
+    formatKickoffTime,
+} from '../utils/dateTime'
 import '../styles/matches/MatchDetails.css'
 
 function MatchDetailsPage() {
     const { id } = useParams()
     const { match, isLoading, error } = useMatchDetails(id)
+
+    const isUpcoming =
+        match?.status === 'SCHEDULED' || match?.status === 'TIMED'
+
+    const hasScore =
+        match != null &&
+        match.homeScore != null &&
+        match.awayScore != null
+
+    const result = !match
+        ? null
+        : isUpcoming
+            ? formatKickoffTime(match.kickoffAt)
+            : hasScore
+                ? `${match.homeScore} – ${match.awayScore}`
+                : 'vs'
 
     return (
         <section className="match-details" aria-busy={isLoading}>
@@ -20,59 +43,61 @@ function MatchDetailsPage() {
             ) : error ? (
                 <p role="alert">{error}</p>
             ) : match ? (
-                <div className="match-details__card">
-                    <p className="match-details__status">{match.status}</p>
-
-                    <div className="match-details__fixture">
-                        <div className="match-details__team">
-                            {match.homeTeam.crestUrl && (
-                                <img
-                                    key={match.homeTeam.crestUrl}
-                                    src={match.homeTeam.crestUrl}
-                                    alt=""
-                                    onError={(event) => {
-                                        event.currentTarget.hidden = true
-                                    }}
-                                />
-                            )}
-
-                            <h2>{match.homeTeam.shortName || match.homeTeam.name}</h2>
-                            <span>Home</span>
+                <>
+                    <div className="match-details__card">
+                        <div className="match-details__status">
+                            <MatchStatus status={match.status} />
                         </div>
 
-                        <p className="match-details__score">
-                            {match.homeScore != null && match.awayScore != null
-                                ? `${match.homeScore} – ${match.awayScore}`
-                                : 'vs'}
-                        </p>
+                        <div className="match-details__fixture">
+                            <div className="match-details__team">
+                                <TeamCrest url={match.homeTeam.crestUrl} />
 
-                        <div className="match-details__team">
-                            {match.awayTeam.crestUrl && (
-                                <img
-                                    key={match.awayTeam.crestUrl}
-                                    src={match.awayTeam.crestUrl}
-                                    alt=""
-                                    onError={(event) => {
-                                        event.currentTarget.hidden = true
-                                    }}
-                                />
+                                <h2>
+                                    {match.homeTeam.shortName ??
+                                        match.homeTeam.name}
+                                </h2>
+
+                                <span>Home</span>
+                            </div>
+
+                            <p className="match-details__score">
+                                {result}
+                            </p>
+
+                            <div className="match-details__team">
+                                <TeamCrest url={match.awayTeam.crestUrl} />
+
+                                <h2>
+                                    {match.awayTeam.shortName ??
+                                        match.awayTeam.name}
+                                </h2>
+
+                                <span>Away</span>
+                            </div>
+                        </div>
+
+                        <div className="match-details__meta">
+                            <time dateTime={match.kickoffAt}>
+                                {formatMatchDateTime(match.kickoffAt)}
+                            </time>
+
+                            {match.matchday != null && (
+                                <span>Matchday {match.matchday}</span>
                             )}
-
-                            <h2>{match.awayTeam.shortName || match.awayTeam.name}</h2>
-                            <span>Away</span>
                         </div>
                     </div>
 
-                    <div className="match-details__meta">
-                        <time dateTime={match.kickoffAt}>
-                            {formatMatchDateTime(match.kickoffAt)}
-                        </time>
+                    <div className="match-details__content">
+                        <MatchHistory key={match.id} match={match} />
 
-                        {match.matchday != null && (
-                            <span>Matchday {match.matchday}</span>
-                        )}
+                        <StandingsTable
+                            title="Current standings"
+                            homeTeamId={match.homeTeam.id}
+                            awayTeamId={match.awayTeam.id}
+                        />
                     </div>
-                </div>
+                </>
             ) : null}
         </section>
     )

@@ -8,21 +8,25 @@ function TeamCrest({ url }) {
 
     return (
         <span className="standings__crest" aria-hidden="true">
-      {url && failedUrl !== url ? (
-          <img
-              src={url}
-              alt=""
-              loading="lazy"
-              onError={() => setFailedUrl(url)}
-          />
-      ) : (
-          <span className="standings__crest-placeholder">—</span>
-      )}
-    </span>
+            {url && failedUrl !== url ? (
+                <img
+                    src={url}
+                    alt=""
+                    loading="lazy"
+                    onError={() => setFailedUrl(url)}
+                />
+            ) : (
+                <span className="standings__crest-placeholder">—</span>
+            )}
+        </span>
     )
 }
 
-function StandingsTable() {
+function StandingsTable({
+                            homeTeamId,
+                            awayTeamId,
+                            title = 'League table',
+                        }) {
     const {
         data,
         isLoading,
@@ -40,7 +44,7 @@ function StandingsTable() {
             aria-busy={isLoading}
         >
             <header className="standings__header">
-                <h2 id="standings-heading">League table</h2>
+                <h2 id="standings-heading">{title}</h2>
 
                 {data && (
                     <p>
@@ -78,47 +82,91 @@ function StandingsTable() {
                     <div className="standings__table-wrapper">
                         <table className="standings__table">
                             <caption className="standings__caption">
-                                {data.competitionName} standings
+                                Latest saved {data.competitionName} standings
                             </caption>
 
                             <thead>
                             <tr>
-                                <th scope="col" aria-label="Position">#</th>
-                                <th scope="col" className="standings__team-heading">
+                                <th scope="col" aria-label="Position">
+                                    #
+                                </th>
+                                <th
+                                    scope="col"
+                                    className="standings__team-heading"
+                                >
                                     Team
                                 </th>
-                                <th scope="col" aria-label="Played games">P</th>
-                                <th scope="col" aria-label="Goals for and against">G</th>
-                                <th scope="col" aria-label="Points">Pts</th>
+                                <th scope="col" aria-label="Played games">
+                                    P
+                                </th>
+                                <th
+                                    scope="col"
+                                    aria-label="Goals for and against"
+                                >
+                                    G
+                                </th>
+                                <th scope="col" aria-label="Points">
+                                    Pts
+                                </th>
                             </tr>
                             </thead>
 
                             <tbody>
-                            {data.standings.map((entry) => (
-                                <tr key={entry.team.id}>
-                                    <td>{entry.position}</td>
+                            {data.standings.map((entry) => {
+                                const role =
+                                    entry.team.id === homeTeamId
+                                        ? 'Home'
+                                        : entry.team.id === awayTeamId
+                                            ? 'Away'
+                                            : null
 
-                                    <th scope="row" className="standings__team-cell">
-                                        <div className="standings__team">
-                                            <TeamCrest url={entry.team.crestUrl} />
+                                return (
+                                    <tr
+                                        key={entry.team.id}
+                                        className={
+                                            role
+                                                ? 'standings__row--highlighted'
+                                                : undefined
+                                        }
+                                    >
+                                        <td>{entry.position}</td>
 
-                                            <span>
-                          {entry.team.shortName ?? entry.team.name}
-                        </span>
-                                        </div>
-                                    </th>
+                                        <th
+                                            scope="row"
+                                            className="standings__team-cell"
+                                        >
+                                            <div className="standings__team">
+                                                <TeamCrest
+                                                    url={entry.team.crestUrl}
+                                                />
 
-                                    <td>{entry.playedGames}</td>
+                                                <div className="standings__team-info">
+                                                        <span>
+                                                            {entry.team.shortName ??
+                                                                entry.team.name}
+                                                        </span>
 
-                                    <td className="standings__goals">
-                                        {entry.goalsFor}:{entry.goalsAgainst}
-                                    </td>
+                                                    {role && (
+                                                        <span className="standings__team-role">
+                                                                {role}
+                                                            </span>
+                                                    )}
+                                                </div>
+                                            </div>
+                                        </th>
 
-                                    <td className="standings__points">
-                                        {entry.points}
-                                    </td>
-                                </tr>
-                            ))}
+                                        <td>{entry.playedGames}</td>
+
+                                        <td className="standings__goals">
+                                            {entry.goalsFor}:{entry.goalsAgainst}
+                                        </td>
+
+                                        <td className="standings__points">
+                                            {entry.points}
+                                        </td>
+                                    </tr>
+                                )
+                            })}
                             </tbody>
                         </table>
                     </div>
