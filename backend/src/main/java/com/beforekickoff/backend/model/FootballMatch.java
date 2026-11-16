@@ -20,6 +20,9 @@ public class FootballMatch {
     @Column(name = "external_api_id", unique = true)
     private Long externalApiId;
 
+    @Column(name = "competition_code", length = 10)
+    private String competitionCode;
+
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "home_team_id", nullable = false)
     private Team homeTeam;
@@ -79,5 +82,9 @@ public class FootballMatch {
         this.matchday = matchday;
         this.homeScore = homeScore;
         this.awayScore = awayScore;
+    }
+
+    public void assignCompetition(String competitionCode) {
+        this.competitionCode = competitionCode;
     }
 }

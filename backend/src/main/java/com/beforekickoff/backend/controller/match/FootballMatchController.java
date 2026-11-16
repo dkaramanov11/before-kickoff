@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.PathVariable;
+import com.beforekickoff.backend.dto.match.FootballMatchHistoryResponse;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -47,5 +48,12 @@ public class FootballMatchController {
     @GetMapping("/{id}")
     public FootballMatchResponse getMatchById(@PathVariable("id") Long id) {
         return footballMatchService.getMatchById(id);
+    }
+
+    @GetMapping("/{id}/history")
+    public FootballMatchHistoryResponse getMatchHistory(
+            @PathVariable("id") Long id
+    ) {
+        return footballMatchService.getMatchHistory(id);
     }
 }
