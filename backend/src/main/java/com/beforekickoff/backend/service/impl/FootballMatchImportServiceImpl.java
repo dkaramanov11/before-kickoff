@@ -70,6 +70,8 @@ public class FootballMatchImportServiceImpl
                 );
             }
 
+            match.assignCompetition("PL");
+
             footballMatchRepository.save(match);
         }
 
