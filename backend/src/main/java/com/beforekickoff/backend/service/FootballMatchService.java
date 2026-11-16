@@ -1,6 +1,7 @@
 package com.beforekickoff.backend.service;
 
 import com.beforekickoff.backend.dto.match.FootballMatchResponse;
+import com.beforekickoff.backend.dto.match.FootballMatchHistoryResponse;
 import java.time.LocalDate;
 
 import java.util.List;
@@ -17,5 +18,7 @@ public interface FootballMatchService {
     );
 
     FootballMatchResponse getMatchById(Long id);
+
+    FootballMatchHistoryResponse getMatchHistory(Long id);
 
 }

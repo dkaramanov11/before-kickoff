@@ -12,6 +12,9 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.server.ResponseStatusException;
+import com.beforekickoff.backend.dto.match.FootballMatchHistoryResponse;
+import com.beforekickoff.backend.dto.match.TeamMatchHistoryResponse;
+import org.springframework.data.domain.PageRequest;
 
 import java.time.Instant;
 import java.time.LocalDate;
@@ -107,5 +110,81 @@ public class FootballMatchServiceImpl implements FootballMatchService {
                 ));
 
         return FootballMatchResponse.from(match);
+    }
+    @Override
+    public FootballMatchHistoryResponse getMatchHistory(Long id) {
+        if (id == null || id <= 0) {
+            throw new ResponseStatusException(
+                    HttpStatus.BAD_REQUEST,
+                    "id must be a positive number"
+            );
+        }
+
+        FootballMatch match = footballMatchRepository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(
+                        HttpStatus.NOT_FOUND,
+                        "Match with id " + id + " was not found"
+                ));
+
+        Long homeTeamId = match.getHomeTeam().getId();
+        Long awayTeamId = match.getAwayTeam().getId();
+        Instant referenceKickoffAt = match.getKickoffAt();
+
+        Instant now = Instant.now();
+        PageRequest limit = PageRequest.of(0, 5);
+
+        List<FootballMatchResponse> homeRecentMatches =
+                footballMatchRepository.findRecentTeamMatches(
+                                "PL",
+                                id,
+                                homeTeamId,
+                                referenceKickoffAt,
+                                now,
+                                limit
+                        )
+                        .stream()
+                        .map(FootballMatchResponse::from)
+                        .toList();
+
+        List<FootballMatchResponse> awayRecentMatches =
+                footballMatchRepository.findRecentTeamMatches(
+                                "PL",
+                                id,
+                                awayTeamId,
+                                referenceKickoffAt,
+                                now,
+                                limit
+                        )
+                        .stream()
+                        .map(FootballMatchResponse::from)
+                        .toList();
+
+        List<FootballMatchResponse> headToHead =
+                footballMatchRepository.findHeadToHeadMatches(
+                                "PL",
+                                id,
+                                homeTeamId,
+                                awayTeamId,
+                                referenceKickoffAt,
+                                now,
+                                limit
+                        )
+                        .stream()
+                        .map(FootballMatchResponse::from)
+                        .toList();
+
+        return new FootballMatchHistoryResponse(
+                match.getId(),
+                referenceKickoffAt,
+                new TeamMatchHistoryResponse(
+                        homeTeamId,
+                        homeRecentMatches
+                ),
+                new TeamMatchHistoryResponse(
+                        awayTeamId,
+                        awayRecentMatches
+                ),
+                headToHead
+        );
     }
 }
