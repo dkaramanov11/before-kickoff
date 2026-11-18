@@ -2,10 +2,26 @@ import json
 from pathlib import Path
 
 import pandas as pd
+import argparse
 
+
+parser = argparse.ArgumentParser(
+    description="Inspect a Premier League season JSON file."
+)
+
+parser.add_argument(
+    "--season",
+    default="2024-25",
+    help="Season to inspect, for example 2024-25.",
+)
+
+args = parser.parse_args()
 
 BASE_DIR = Path(__file__).resolve().parent.parent
-DATA_FILE = BASE_DIR / "data" / "raw" / "premier-league-2024-25.json"
+DATA_FILE = BASE_DIR / "data" / "raw" / f"premier-league-{args.season}.json"
+
+if not DATA_FILE.is_file():
+    parser.error(f"Data file not found: {DATA_FILE}")
 
 with DATA_FILE.open(encoding="utf-8") as file:
     data = json.load(file)
