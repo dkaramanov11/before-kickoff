@@ -34,6 +34,23 @@ They do not independently verify every result or kickoff time.
 - 380 matches, 20 teams, and 19 home plus 19 away matches per team.
 - No duplicate ordered pairs, same-team matches, invalid dates, or invalid scores.
 
+## Initial inspection: Premier League 2022/23
+
+- Source file: https://raw.githubusercontent.com/openfootball/football.json/master/2022-23/en.1.json
+- Local file: ml-service/data/raw/premier-league-2022-23.json
+- All currently implemented checks passed.
+- 380 matches, 20 teams, and 19 home plus 19 away matches per team.
+- No duplicate ordered pairs, same-team matches, invalid dates, or invalid scores.
+
+## Download a season
+
+From ml-service:
+
+    python scripts/download_data.py --season 2022-23
+
+Existing files are not overwritten.
+After downloading, run inspect_data.py for the same season.
+
 ## Run inspection
 
 From ml-service with the virtual environment activated:
