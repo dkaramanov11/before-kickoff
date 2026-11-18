@@ -74,6 +74,29 @@ with 2,280 matches in total.
 
 Team names have not yet been standardized across seasons.
 
+## Team names and combined dataset
+
+- Explicit aliases standardize 39 source names into 27 team names.
+- Mapping: ml-service/data/mappings/team_aliases.json
+- Preparation: python scripts/prepare_matches.py
+- Output: ml-service/data/processed/matches.csv
+- The combined dataset contains 2,280 matches from six seasons.
+- Rows are sorted by date. Ordering within a date does not establish kickoff order.
+
+## Known source date error: 2019/20
+
+The original JSON contains 66 July fixtures dated 2019 instead of 2020.
+Their dates were compared with:
+https://www.11v11.com/competitions/premier-league/2020/matches/
+
+prepare_matches.py changes the year only for 2019-07 dates in season 2019-20.
+It requires exactly 66 affected records and stops otherwise.
+Original JSON files remain unchanged.
+
+After correction, preparation checks that all dates fall within
+the broad August-to-August season windows.
+These checks do not independently establish the accuracy of every match date.
+
 ## Run inspection
 
 From ml-service with the virtual environment activated:
