@@ -25,6 +25,15 @@ Passed checks:
 These checks establish structural consistency.
 They do not independently verify every result or kickoff time.
 
+## Initial inspection: Premier League 2023/24
+
+- Source file: https://raw.githubusercontent.com/openfootball/football.json/master/2023-24/en.1.json
+- Downloaded: 2026-11-18
+- Local file: ml-service/data/raw/premier-league-2023-24.json
+- All currently implemented checks passed.
+- 380 matches, 20 teams, and 19 home plus 19 away matches per team.
+- No duplicate ordered pairs, same-team matches, invalid dates, or invalid scores.
+
 ## Run inspection
 
 From ml-service with the virtual environment activated:
