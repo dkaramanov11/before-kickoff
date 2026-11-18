@@ -51,6 +51,29 @@ From ml-service:
 Existing files are not overwritten.
 After downloading, run inspect_data.py for the same season.
 
+## Additional inspected seasons
+
+Source URL pattern:
+https://raw.githubusercontent.com/openfootball/football.json/master/{season}/en.1.json
+
+Local file pattern:
+ml-service/data/raw/premier-league-{season}.json
+
+| Season | Matches | Teams | All implemented checks passed |
+|--------|---------|-------|-------------------------------|
+| 2019-20 | 380 | 20 | Yes |
+| 2020-21 | 380 | 20 | Yes |
+| 2021-22 | 380 | 20 | Yes |
+
+Each team has 19 home and 19 away matches.
+No duplicate ordered pairs, same-team matches, invalid dates,
+or invalid full-time scores were found.
+
+The dataset now contains six seasons, from 2019/20 through 2024/25,
+with 2,280 matches in total.
+
+Team names have not yet been standardized across seasons.
+
 ## Run inspection
 
 From ml-service with the virtual environment activated:
