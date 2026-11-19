@@ -71,5 +71,38 @@ if __name__ == "__main__":
     print()
     print("Previous matches found:", len(previous))
     print("Enough history:", len(previous) == 5)
+
     form = calculate_team_form(previous, "Arsenal FC")
     print("Team form:", form)
+
+    assert form is not None
+    assert form["points_last5"] == 15
+    assert abs(form["goals_for_avg_last5"] - 2.8) < 0.000001
+    assert abs(form["goals_against_avg_last5"] - 0.6) < 0.000001
+
+    # The selected match and all later matches must have no effect.
+    past_only = matches.loc[matches["date"] < "2024-08-17"]
+
+    previous_from_past = get_previous_matches(
+        past_only, "Arsenal FC", "2024-08-17"
+    )
+
+    pd.testing.assert_frame_equal(previous, previous_from_past)
+
+    # At the start of our dataset, there is no earlier history.
+    no_history = get_previous_matches(
+        matches, "Liverpool FC", "2019-08-09"
+    )
+
+    assert no_history.empty
+    assert calculate_team_form(no_history, "Liverpool FC") is None
+
+    # A newly promoted team has no recent Premier League history.
+    promoted_history = get_previous_matches(
+        matches, "Ipswich Town FC", "2024-08-17"
+    )
+
+    assert promoted_history.empty
+    assert calculate_team_form(promoted_history, "Ipswich Town FC") is None
+
+    print("Team form checks passed.")
