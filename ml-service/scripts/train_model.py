@@ -24,6 +24,20 @@ FEATURE_COLUMNS = [
     "away_goals_against_avg_last5",
 ]
 
+LABELS = ["1", "X", "2"]
+C_VALUES = [0.01, 0.1, 1.0, 10.0, 100.0]
+
+
+def create_model(c_value):
+    return Pipeline([
+        ("scaler", StandardScaler()),
+        ("classifier", LogisticRegression(
+            solver="lbfgs",
+            C=c_value,
+            max_iter=1000,
+        )),
+    ])
+
 
 if __name__ == "__main__":
     train = pd.read_csv(
@@ -42,10 +56,10 @@ if __name__ == "__main__":
         if data[FEATURE_COLUMNS + ["target"]].isna().any().any():
             raise ValueError(f"{name} contains missing values.")
 
-        if not data["target"].isin(["1", "X", "2"]).all():
+        if not data["target"].isin(LABELS).all():
             raise ValueError(f"{name} contains invalid targets.")
 
-    if set(train["target"]) != {"1", "X", "2"}:
+    if set(train["target"]) != set(LABELS):
         raise ValueError("Training data must contain all three outcomes.")
 
     X_train = train[FEATURE_COLUMNS]
@@ -54,15 +68,8 @@ if __name__ == "__main__":
     X_validation = validation[FEATURE_COLUMNS]
     y_validation = validation["target"]
 
-    model = Pipeline([
-        ("scaler", StandardScaler()),
-        ("classifier", LogisticRegression(
-            solver="lbfgs",
-            C=1.0,
-            max_iter=1000,
-        )),
-    ])
-
+    # Evaluate the initial model.
+    model = create_model(c_value=100.0)
     model.fit(X_train, y_train)
 
     predictions = model.predict(X_validation)
@@ -75,33 +82,33 @@ if __name__ == "__main__":
         labels=model.classes_,
     )
 
-    print("Model: Logistic Regression")
+    print("Model: Logistic Regression (C=100.0)")
     print("Training matches:", len(train))
     print("Validation matches:", len(validation))
     print("Features:", len(FEATURE_COLUMNS))
     print()
     print(f"Validation accuracy: {accuracy:.4f}")
     print(f"Validation log loss: {loss:.4f}")
+
     print()
     print("Predicted outcomes:")
     print(
         pd.Series(predictions)
         .value_counts()
-        .reindex(["1", "X", "2"], fill_value=0)
+        .reindex(LABELS, fill_value=0)
         .to_string()
     )
-    labels = ["1", "X", "2"]
 
     matrix = confusion_matrix(
         y_validation,
         predictions,
-        labels=labels,
+        labels=LABELS,
     )
 
     matrix_table = pd.DataFrame(
         matrix,
-        index=[f"actual_{label}" for label in labels],
-        columns=[f"predicted_{label}" for label in labels],
+        index=[f"actual_{label}" for label in LABELS],
+        columns=[f"predicted_{label}" for label in LABELS],
     )
 
     print()
@@ -113,7 +120,46 @@ if __name__ == "__main__":
     print(classification_report(
         y_validation,
         predictions,
-        labels=labels,
+        labels=LABELS,
         digits=4,
         zero_division=0,
+    ))
+
+    # Compare regularization values using validation data only.
+    results = []
+
+    for c_value in C_VALUES:
+        candidate = create_model(c_value)
+        candidate.fit(X_train, y_train)
+
+        candidate_predictions = candidate.predict(X_validation)
+        candidate_probabilities = candidate.predict_proba(X_validation)
+
+        results.append({
+            "C": c_value,
+            "accuracy": accuracy_score(
+                y_validation,
+                candidate_predictions,
+            ),
+            "log_loss": log_loss(
+                y_validation,
+                candidate_probabilities,
+                labels=candidate.classes_,
+            ),
+            "predicted_draws": int(
+                (candidate_predictions == "X").sum()
+            ),
+        })
+
+    comparison = (
+        pd.DataFrame(results)
+        .sort_values(["log_loss", "C"])
+        .reset_index(drop=True)
+    )
+
+    print()
+    print("Regularization comparison:")
+    print(comparison.to_string(
+        index=False,
+        float_format="%.6f",
     ))
