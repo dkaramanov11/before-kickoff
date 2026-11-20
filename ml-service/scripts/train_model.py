@@ -2,7 +2,12 @@ from pathlib import Path
 
 import pandas as pd
 from sklearn.linear_model import LogisticRegression
-from sklearn.metrics import accuracy_score, log_loss
+from sklearn.metrics import (
+    accuracy_score,
+    classification_report,
+    confusion_matrix,
+    log_loss,
+)
 from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import StandardScaler
 
@@ -85,3 +90,30 @@ if __name__ == "__main__":
         .reindex(["1", "X", "2"], fill_value=0)
         .to_string()
     )
+    labels = ["1", "X", "2"]
+
+    matrix = confusion_matrix(
+        y_validation,
+        predictions,
+        labels=labels,
+    )
+
+    matrix_table = pd.DataFrame(
+        matrix,
+        index=[f"actual_{label}" for label in labels],
+        columns=[f"predicted_{label}" for label in labels],
+    )
+
+    print()
+    print("Confusion matrix:")
+    print(matrix_table.to_string())
+
+    print()
+    print("Classification report:")
+    print(classification_report(
+        y_validation,
+        predictions,
+        labels=labels,
+        digits=4,
+        zero_division=0,
+    ))
