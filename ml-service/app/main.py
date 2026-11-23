@@ -4,6 +4,10 @@ from pathlib import Path
 import joblib
 from fastapi import FastAPI, HTTPException, Request
 
+import numpy as np
+import pandas as pd
+
+from app.schemas import PredictionRequest
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 MODEL_FILE = BASE_DIR / "models" / "match_outcome_v1.joblib"
@@ -66,4 +70,65 @@ def ready(request: Request):
         "model_version": artifact["metadata"]["model_version"],
         "classes": artifact["metadata"]["classes"],
         "feature_count": len(artifact["metadata"]["feature_columns"]),
+    }
+
+@app.post("/predict")
+def predict(payload: PredictionRequest, request: Request):
+    artifact = getattr(request.app.state, "model_artifact", None)
+
+    if artifact is None:
+        raise HTTPException(
+            status_code=503,
+            detail="Model is not loaded.",
+        )
+
+    pipeline = artifact["pipeline"]
+    metadata = artifact["metadata"]
+    feature_columns = metadata["feature_columns"]
+    features = payload.model_dump()
+
+    if set(features) != set(feature_columns):
+        raise HTTPException(
+            status_code=500,
+            detail="Model feature configuration mismatch.",
+        )
+
+    inputs = pd.DataFrame(
+        [features],
+        columns=feature_columns,
+    )
+
+    probabilities = pipeline.predict_proba(inputs)[0]
+
+    if (
+            not np.isfinite(probabilities).all()
+            or (probabilities < 0).any()
+            or (probabilities > 1).any()
+            or not np.isclose(probabilities.sum(), 1.0)
+    ):
+        raise HTTPException(
+            status_code=500,
+            detail="Model returned invalid probabilities.",
+        )
+
+    probabilities_by_class = {
+        str(label): float(probability)
+        for label, probability in zip(
+            pipeline.classes_,
+            probabilities,
+        )
+    }
+
+    return {
+        "status": "ok",
+        "model_version": metadata["model_version"],
+        "predicted_outcome": max(
+            probabilities_by_class,
+            key=probabilities_by_class.get,
+        ),
+        "probabilities": {
+            "1": probabilities_by_class["1"],
+            "X": probabilities_by_class["X"],
+            "2": probabilities_by_class["2"],
+        },
     }
