@@ -95,4 +95,29 @@ public interface FootballMatchRepository
             @Param("now") Instant now,
             Pageable pageable
     );
+
+    @EntityGraph(attributePaths = {"homeTeam", "awayTeam"})
+    @Query("""
+        SELECT m
+        FROM FootballMatch m
+        WHERE m.competitionCode = 'PL'
+          AND m.status = 'FINISHED'
+          AND m.homeScore >= 0
+          AND m.awayScore >= 0
+          AND m.kickoffAt >= :fromInclusive
+          AND m.kickoffAt < :toExclusive
+          AND m.kickoffAt < :now
+          AND (
+              m.homeTeam.id = :teamId
+              OR m.awayTeam.id = :teamId
+          )
+        ORDER BY m.kickoffAt DESC, m.id DESC
+        """)
+    List<FootballMatch> findPredictionHistory(
+            @Param("teamId") Long teamId,
+            @Param("fromInclusive") Instant fromInclusive,
+            @Param("toExclusive") Instant toExclusive,
+            @Param("now") Instant now,
+            Pageable pageable
+    );
 }
