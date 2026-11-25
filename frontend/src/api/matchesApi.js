@@ -41,3 +41,10 @@ export function getMatchHistory(id, { signal } = {}) {
         { signal }
     )
 }
+
+export function getMatchPrediction(id, { signal } = {}) {
+    return getJson(
+        `/api/matches/${encodeURIComponent(id)}/prediction`,
+        { signal }
+    )
+}
