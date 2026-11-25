@@ -1,8 +1,9 @@
 export class HttpError extends Error {
-    constructor(status) {
+    constructor(status, body = null) {
         super(`Request failed with status ${status}`)
         this.name = 'HttpError'
         this.status = status
+        this.body = body
     }
 }
 
@@ -15,7 +16,17 @@ export async function getJson(path, { signal } = {}) {
     })
 
     if (!response.ok) {
-        throw new HttpError(response.status)
+        let body = null
+
+        try {
+            body = await response.json()
+        } catch (error) {
+            if (signal?.aborted) {
+                throw error
+            }
+        }
+
+        throw new HttpError(response.status, body)
     }
 
     return response.json()

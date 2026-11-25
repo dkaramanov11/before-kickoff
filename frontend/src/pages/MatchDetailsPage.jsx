@@ -4,6 +4,7 @@ import MatchHistory from '../components/matches/MatchHistory'
 import MatchStatus from '../components/matches/MatchStatus'
 import StandingsTable from '../components/standings/StandingsTable'
 import TeamCrest from '../components/teams/TeamCrest'
+import MatchPrediction from '../components/matches/MatchPrediction'
 import {
     formatMatchDateTime,
     formatKickoffTime,
@@ -87,6 +88,8 @@ function MatchDetailsPage() {
                             )}
                         </div>
                     </div>
+
+                    <MatchPrediction key={match.id} match={match} />
 
                     <div className="match-details__content">
                         <MatchHistory key={match.id} match={match} />
