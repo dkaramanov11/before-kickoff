@@ -7,4 +7,6 @@ import java.util.List;
 public interface TeamService {
 
     List<TeamResponse> getAllTeams();
+
+    TeamResponse getTeamById(Long id);
 }
