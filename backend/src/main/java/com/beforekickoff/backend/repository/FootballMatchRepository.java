@@ -120,4 +120,44 @@ public interface FootballMatchRepository
             @Param("now") Instant now,
             Pageable pageable
     );
+
+    @EntityGraph(attributePaths = {"homeTeam", "awayTeam"})
+    @Query("""
+    SELECT m
+    FROM FootballMatch m
+    WHERE m.competitionCode = 'PL'
+      AND m.status = 'FINISHED'
+      AND m.homeScore IS NOT NULL
+      AND m.awayScore IS NOT NULL
+      AND m.kickoffAt < :now
+      AND (
+          m.homeTeam.id = :teamId
+          OR m.awayTeam.id = :teamId
+      )
+    ORDER BY m.kickoffAt DESC, m.id DESC
+    """)
+    List<FootballMatch> findTeamRecentMatches(
+            @Param("teamId") Long teamId,
+            @Param("now") Instant now,
+            Pageable pageable
+    );
+
+    @EntityGraph(attributePaths = {"homeTeam", "awayTeam"})
+    @Query("""
+    SELECT m
+    FROM FootballMatch m
+    WHERE m.competitionCode = 'PL'
+      AND m.status IN ('SCHEDULED', 'TIMED')
+      AND m.kickoffAt > :now
+      AND (
+          m.homeTeam.id = :teamId
+          OR m.awayTeam.id = :teamId
+      )
+    ORDER BY m.kickoffAt ASC, m.id ASC
+    """)
+    List<FootballMatch> findTeamUpcomingMatches(
+            @Param("teamId") Long teamId,
+            @Param("now") Instant now,
+            Pageable pageable
+    );
 }
