@@ -182,3 +182,18 @@
     outline: 2px solid var(--color-accent);
     outline-offset: 3px;
 }
+.standings__team-link {
+    color: inherit;
+    text-decoration: none;
+    border-radius: var(--radius-small);
+}
+
+.standings__team-link:hover .standings__team-info > span:first-child {
+    color: var(--color-accent);
+    text-decoration: underline;
+}
+
+.standings__team-link:focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 4px;
+}

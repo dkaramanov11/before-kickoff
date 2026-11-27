@@ -20,11 +20,12 @@ function MatchCard({ match }) {
             ? `${match.homeScore} – ${match.awayScore}`
             : 'vs'
 
+    const homeName = match.homeTeam.shortName ?? match.homeTeam.name
+    const awayName = match.awayTeam.shortName ?? match.awayTeam.name
+    const matchPath = `/matches/${match.id}`
+
     return (
-        <Link
-            className="match-card"
-            to={`/matches/${match.id}`}
-        >
+        <article className="match-card">
             <div className="match-card__meta">
                 <time dateTime={match.kickoffAt}>
                     {formatMatchDateTime(match.kickoffAt)}
@@ -36,9 +37,13 @@ function MatchCard({ match }) {
             <div className="match-card__fixture">
                 <MatchTeam team={match.homeTeam} />
 
-                <span className="match-card__result">
+                <Link
+                    className="match-card__result"
+                    to={matchPath}
+                    aria-label={`${homeName} vs ${awayName}, ${result}, match details`}
+                >
                     {result}
-                </span>
+                </Link>
 
                 <MatchTeam team={match.awayTeam} isAway />
             </div>
@@ -50,11 +55,15 @@ function MatchCard({ match }) {
                         : ''}
                 </span>
 
-                <span className="match-card__details">
+                <Link
+                    className="match-card__details"
+                    to={matchPath}
+                    aria-label={`View details for ${homeName} vs ${awayName}`}
+                >
                     View details <span aria-hidden="true">→</span>
-                </span>
+                </Link>
             </div>
-        </Link>
+        </article>
     )
 }
 

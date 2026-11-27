@@ -52,12 +52,16 @@ function MatchDetailsPage() {
 
                         <div className="match-details__fixture">
                             <div className="match-details__team">
-                                <TeamCrest url={match.homeTeam.crestUrl} />
+                                <Link
+                                    className="match-details__team-link"
+                                    to={`/teams/${match.homeTeam.id}`}
+                                >
+                                    <TeamCrest url={match.homeTeam.crestUrl} />
 
-                                <h2>
-                                    {match.homeTeam.shortName ??
-                                        match.homeTeam.name}
-                                </h2>
+                                    <h2>
+                                        {match.homeTeam.shortName ?? match.homeTeam.name}
+                                    </h2>
+                                </Link>
 
                                 <span>Home</span>
                             </div>
@@ -67,12 +71,16 @@ function MatchDetailsPage() {
                             </p>
 
                             <div className="match-details__team">
-                                <TeamCrest url={match.awayTeam.crestUrl} />
+                                <Link
+                                    className="match-details__team-link"
+                                    to={`/teams/${match.awayTeam.id}`}
+                                >
+                                    <TeamCrest url={match.awayTeam.crestUrl} />
 
-                                <h2>
-                                    {match.awayTeam.shortName ??
-                                        match.awayTeam.name}
-                                </h2>
+                                    <h2>
+                                        {match.awayTeam.shortName ?? match.awayTeam.name}
+                                    </h2>
+                                </Link>
 
                                 <span>Away</span>
                             </div>
