@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { useStandings } from '../../hooks/useStandings'
 import { formatMatchDateTime } from '../../utils/dateTime'
 import '../../styles/standings/StandingsTable.css'
+import { Link } from 'react-router-dom'
 
 function TeamCrest({ url }) {
     const [failedUrl, setFailedUrl] = useState(null)
@@ -135,7 +136,10 @@ function StandingsTable({
                                             scope="row"
                                             className="standings__team-cell"
                                         >
-                                            <div className="standings__team">
+                                            <Link
+                                                className="standings__team standings__team-link"
+                                                to={`/teams/${entry.team.id}`}
+                                            >
                                                 <TeamCrest
                                                     url={entry.team.crestUrl}
                                                 />
@@ -152,7 +156,7 @@ function StandingsTable({
                                                             </span>
                                                     )}
                                                 </div>
-                                            </div>
+                                            </Link>
                                         </th>
 
                                         <td>{entry.playedGames}</td>

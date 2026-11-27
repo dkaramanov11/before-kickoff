@@ -16,11 +16,6 @@
     background-color: var(--color-surface-hover);
 }
 
-.match-card:focus-visible {
-    outline: 2px solid var(--color-accent);
-    outline-offset: 3px;
-}
-
 .match-card__meta {
     display: flex;
     justify-content: space-between;
@@ -100,4 +95,20 @@
     .match-card__result {
         font-size: 18px;
     }
+}
+.match-card__result,
+.match-card__details {
+    border-radius: var(--radius-small);
+    text-decoration: none;
+}
+
+.match-card__result:hover,
+.match-card__details:hover {
+    text-decoration: underline;
+}
+
+.match-card__result:focus-visible,
+.match-card__details:focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 4px;
 }

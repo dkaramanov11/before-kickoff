@@ -25,3 +25,19 @@
         font-size: 13px;
     }
 }
+
+.match-team {
+    border-radius: var(--radius-small);
+    color: inherit;
+    text-decoration: none;
+}
+
+.match-team:hover .match-team__name {
+    color: var(--color-accent);
+    text-decoration: underline;
+}
+
+.match-team:focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 4px;
+}
