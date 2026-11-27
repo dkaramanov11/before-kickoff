@@ -3,6 +3,7 @@ import Sidebar from './components/layout/Sidebar'
 import MatchesPage from './pages/MatchesPage'
 import './styles/App.css'
 import MatchDetailsPage from './pages/MatchDetailsPage'
+import TeamDetailsPage from './pages/TeamDetailsPage'
 
 function App() {
     return (
@@ -14,6 +15,7 @@ function App() {
                     <Routes>
                         <Route path="/" element={<MatchesPage />} />
                         <Route path="/matches/:id" element={<MatchDetailsPage />} />
+                        <Route path="/teams/:id" element={<TeamDetailsPage />} />
                         <Route
                             path="*"
                             element={
